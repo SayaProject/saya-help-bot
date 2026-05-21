@@ -9,7 +9,7 @@ if (-not (Test-Path $EnvFile)) {
     throw "Missing $EnvFile. Copy .env.example to .env and fill the required values."
 }
 
-$required = @("TOKEN", "OWNER_ID", "OWNER_USERNAME", "API_ID", "API_HASH", "DATABASE_URL")
+$required = @("TOKEN", "OWNER_ID", "OWNER_USERNAME", "API_ID", "API_HASH")
 $values = @{}
 
 Get-Content $EnvFile | ForEach-Object {
@@ -29,18 +29,23 @@ if ($missing) {
     throw "Missing required env values: $($missing -join ', ')"
 }
 
-if (-not (Test-Path "data")) {
-    New-Item -ItemType Directory -Path "data" | Out-Null
+$composeFile = "docker-compose.local.yml"
+if (-not (Test-Path $composeFile)) {
+    throw "Missing $composeFile."
 }
 
-$image = "saya-help-bot:local"
-if ($Build) {
-    docker build -f Dockerfile.local -t $image .
-}
-
-docker image inspect $image *> $null
+docker compose version *> $null
 if ($LASTEXITCODE -ne 0) {
-    docker build -f Dockerfile.local -t $image .
+    throw "Docker Compose is required. Install Docker Desktop, then run this script again."
 }
 
-docker run --rm -it --env-file $EnvFile -v "${PWD}\data:/app/data" $image
+$composeArgs = @("-f", $composeFile, "up", "-d")
+if ($Build) {
+    $composeArgs += "--build"
+}
+
+docker compose @composeArgs
+docker compose -f $composeFile ps
+Write-Host ""
+Write-Host "Bot is starting. Press Ctrl+C to stop watching logs; the containers will keep running."
+docker compose -f $composeFile logs -f bot

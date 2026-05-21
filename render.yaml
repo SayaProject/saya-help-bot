@@ -1,0 +1,72 @@
+services:
+  - type: worker
+    name: saya-help-bot
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile.local
+    dockerContext: .
+    envVars:
+      - key: ENV
+        value: "True"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saya-help-bot-postgres
+          property: connectionString
+      - key: WEBHOOK
+        value: "False"
+      - key: SUPPORT_CHAT
+        value: SayaProject
+      - key: ALLOW_EXCL
+        value: "True"
+      - key: ALLOW_CHATS
+        value: "True"
+      - key: INFOPIC
+        value: "True"
+      - key: DEL_CMDS
+        value: "True"
+      - key: STRICT_GBAN
+        value: "True"
+      - key: WORKERS
+        value: "8"
+      - key: NO_LOAD
+        value: "rss cleaner connection math"
+      - key: SPAMWATCH_SUPPORT_CHAT
+        value: SpamWatchSupport
+      - key: TOKEN
+        sync: false
+      - key: OWNER_ID
+        sync: false
+      - key: OWNER_USERNAME
+        sync: false
+      - key: API_ID
+        sync: false
+      - key: API_HASH
+        sync: false
+      - key: JOIN_LOGGER
+        sync: false
+      - key: EVENT_LOGS
+        sync: false
+      - key: SPAMWATCH_API
+        sync: false
+      - key: CASH_API_KEY
+        sync: false
+      - key: TIME_API_KEY
+        sync: false
+      - key: AI_API_KEY
+        sync: false
+      - key: WALL_API
+        sync: false
+      - key: DONATION_LINK
+        sync: false
+      - key: BAN_STICKER
+        sync: false
+
+databases:
+  - name: saya-help-bot-postgres
+    databaseName: saya_help_bot
+    user: saya_help_bot
+    plan: free
+    postgresMajorVersion: "15"

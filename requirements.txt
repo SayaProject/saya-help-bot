@@ -5,7 +5,7 @@ bleach
 cachetools
 coffeehouse
 CurrencyConverter
-emoji
+emoji==1.7.0
 feedparser
 future
 geopy

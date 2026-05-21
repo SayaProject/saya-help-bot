@@ -38,7 +38,7 @@ try:
 except ImportError:
     LOGGER = logging.getLogger(__name__)
 
-LOGGER.info("For support reach out to @PublicSafetyBureau on Telegram | Powered by @Kaizoku")
+LOGGER.info("For support reach out to @SayaProject on Telegram | Saya Help Bot")
 
 sibylClient: PsychoPass = None
 
@@ -580,7 +580,7 @@ def get_sibyl_info(bot: Bot, user: User, detailed: bool = False) -> (str, Option
         txt += f"\n • <b>Crime Coefficient:</b> <code>?</code> [<a href='https://t.me/SibylSystem/3'>?</a>]"
         txt += f"\n • <b>Hue Color:</b> <code>?</code> [<a href='https://t.me/SibylSystem/5'>?</a>]"
 
-    txt += "\n\nPowered by @SibylSystem | @Kaizoku"
+    txt += "\n\nPowered by @SibylSystem | @SayaProject"
     if data and data.banned:
         keyboard = [[]]
         if not detailed:
@@ -632,7 +632,7 @@ Other Terminologies
 • [Ban Flags and reasons](https://t.me/SibylSystem/4)
 • [Hue Colors explained](https://t.me/SibylSystem/5) 
 • [API Help and docs](https://t.me/PsychoPass/5)
-• [Support group](https://t.me/PublicSafetyBureau)
+• [Support group](https://t.me/SayaProject)
 • [Report bad users](https://t.me/MinistryOfWelfare/8)
 """
 

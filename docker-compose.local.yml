@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: saya_help_bot
+      POSTGRES_USER: saya
+      POSTGRES_PASSWORD: saya_local_password
+    volumes:
+      - saya_help_bot_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saya -d saya_help_bot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://saya:saya_local_password@postgres:5432/saya_help_bot
+      WEBHOOK: "False"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  saya_help_bot_pgdata:

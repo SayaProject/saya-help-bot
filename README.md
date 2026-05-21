@@ -2,7 +2,7 @@
 
 Saya Help Bot is a Telegram group management and support bot based on `AnimeKaizoku/SaitamaRobot`.
 
-This copy is branded for SayaProject and prepared for local Docker testing with Python 3.8.
+This copy is branded for SayaProject and prepared for local Docker testing with Python 3.8 and Postgres.
 
 ## Local setup
 
@@ -29,10 +29,12 @@ Then run:
 For local testing, keep:
 
 ```env
-DATABASE_URL=sqlite:///data/saya-help-bot.sqlite3
+DATABASE_URL=postgresql://saya:saya_local_password@postgres:5432/saya_help_bot
 WEBHOOK=False
 SUPPORT_CHAT=SayaProject
 ```
+
+The local runner uses Docker Compose to start both Postgres and the bot.
 
 ## Links
 
