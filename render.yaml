@@ -4,6 +4,7 @@ services:
     runtime: docker
     plan: free
     region: oregon
+    repo: https://github.com/SayaProject/saya-help-bot
     branch: main
     autoDeployTrigger: commit
     dockerfilePath: ./Dockerfile.local
