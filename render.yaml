@@ -5,7 +5,7 @@ services:
     plan: starter
     region: oregon
     branch: main
-    autoDeploy: true
+    autoDeployTrigger: commit
     dockerfilePath: ./Dockerfile.local
     dockerContext: .
     envVars:
