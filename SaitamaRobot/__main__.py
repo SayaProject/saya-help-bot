@@ -100,7 +100,7 @@ And the following:
 SAITAMA_IMG = "https://telegra.ph/file/46e6d9dfcb3eb9eae95d9.jpg"
 
 DONATE_STRING = """Thanks for wanting to support Saya Help Bot.
-For support or project updates, use @SayaProject or contact @Sayafq."""
+For support or project updates, use @SayaProject."""
 
 IMPORTED = {}
 MIGRATEABLE = []
