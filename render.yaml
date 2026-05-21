@@ -2,7 +2,7 @@ services:
   - type: worker
     name: saya-help-bot
     runtime: docker
-    plan: free
+    plan: starter
     region: oregon
     branch: main
     autoDeploy: true

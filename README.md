@@ -36,6 +36,10 @@ SUPPORT_CHAT=SayaProject
 
 The local runner uses Docker Compose to start both Postgres and the bot.
 
+## Render
+
+This repo includes a `render.yaml` Blueprint for a Docker background worker plus Render Postgres. Render does not support free background workers, so the bot worker uses the `starter` plan; the database is set to the free Postgres plan for testing.
+
 ## Links
 
 - Telegram updates: https://t.me/SayaProject
