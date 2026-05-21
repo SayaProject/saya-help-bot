@@ -1,7 +1,9 @@
 import importlib
 import time
 import re
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from sys import argv
+from threading import Thread
 from typing import Optional
 
 from SaitamaRobot import (
@@ -68,6 +70,27 @@ def get_readable_time(seconds: int) -> str:
     ping_time += ":".join(time_list)
 
     return ping_time
+
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"Saya Help Bot is running.\n")
+
+    def log_message(self, *_):
+        return
+
+
+def start_health_server():
+    if WEBHOOK:
+        return
+
+    server = HTTPServer(("0.0.0.0", PORT), HealthHandler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    LOGGER.info("Health server listening on 0.0.0.0:%s", PORT)
 
 
 PM_START_TEXT = """
@@ -656,5 +679,6 @@ def main():
 
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    start_health_server()
     telethn.start(bot_token=TOKEN)
     main()

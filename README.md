@@ -38,7 +38,9 @@ The local runner uses Docker Compose to start both Postgres and the bot.
 
 ## Render
 
-This repo includes a `render.yaml` Blueprint for a Docker background worker plus Render Postgres. Render does not support free background workers, so the bot worker uses the `starter` plan; the database is set to the free Postgres plan for testing.
+This repo includes a `render.yaml` Blueprint for a free Docker web service plus free Render Postgres. The bot still uses Telegram long polling, and a small health endpoint is exposed for Render.
+
+Render free web services can sleep when they receive no inbound traffic, and free Postgres databases expire after 30 days. Use this setup for testing; choose a paid worker or paid web service for a more reliable always-on bot.
 
 ## Links
 

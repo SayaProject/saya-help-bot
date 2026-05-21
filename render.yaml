@@ -1,13 +1,14 @@
 services:
-  - type: worker
+  - type: web
     name: saya-help-bot
     runtime: docker
-    plan: starter
+    plan: free
     region: oregon
     branch: main
     autoDeployTrigger: commit
     dockerfilePath: ./Dockerfile.local
     dockerContext: .
+    healthCheckPath: /
     envVars:
       - key: ENV
         value: "True"

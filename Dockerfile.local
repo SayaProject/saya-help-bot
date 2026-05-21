@@ -23,4 +23,6 @@ RUN python -m pip install --upgrade pip setuptools wheel \
 
 COPY . .
 
+EXPOSE 10000
+
 CMD ["python", "-m", "SaitamaRobot"]
