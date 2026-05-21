@@ -71,9 +71,9 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-Hey hi {}, I'm {}!
-I am Saya Help Bot, a Telegram group management and support assistant.
-I help admins keep communities cleaner, safer, and easier to manage.
+Hello - {}, I'm your very own group manager!
+
+Click the help section button to learn how to use me to maximise your groups full potential.
 """
 
 HELP_STRINGS = """
@@ -206,10 +206,9 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
-                SAITAMA_IMG,
+            update.effective_message.reply_text(
                 PM_START_TEXT.format(
-                    escape_markdown(first_name), escape_markdown(context.bot.first_name),
+                    escape_markdown(first_name),
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
@@ -217,30 +216,8 @@ def start(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="Add me",
-                                url="t.me/{}?startgroup=true".format(
-                                    context.bot.username,
-                                ),
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Support",
-                                url=f"https://t.me/{SUPPORT_CHAT}",
-                            ),
-                            InlineKeyboardButton(
-                                text="Updates",
-                                url="https://t.me/SayaProject",
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Contact",
-                                url="https://t.me/Sayafq",
-                            ),
-                            InlineKeyboardButton(
-                                text="Source code",
-                                url="https://github.com/SayaProject/saya-help-bot",
+                                text="Click me for help",
+                                callback_data="help_back",
                             ),
                         ],
                     ],
