@@ -18,6 +18,14 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger(__name__)
 
+
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOGGER.error(
@@ -25,7 +33,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     )
     quit(1)
 
-ENV = bool(os.environ.get("ENV", False))
+ENV = env_bool("ENV")
 
 if ENV:
     TOKEN = os.environ.get("TOKEN", None)
@@ -59,23 +67,26 @@ if ENV:
     except ValueError:
         raise Exception("Your tiger users list does not contain valid integers.")
 
-    INFOPIC = bool(os.environ.get("INFOPIC", False))
+    INFOPIC = env_bool("INFOPIC")
     EVENT_LOGS = os.environ.get("EVENT_LOGS", None)
-    WEBHOOK = bool(os.environ.get("WEBHOOK", False))
+    WEBHOOK = env_bool("WEBHOOK")
     URL = os.environ.get("URL", "")  # Does not contain token
     PORT = int(os.environ.get("PORT", 5000))
     CERT_PATH = os.environ.get("CERT_PATH")
-    API_ID = os.environ.get("API_ID", None)
+    try:
+        API_ID = int(os.environ.get("API_ID", None))
+    except ValueError:
+        raise Exception("Your API_ID env variable is not a valid integer.")
     API_HASH = os.environ.get("API_HASH", None)
     DB_URI = os.environ.get("DATABASE_URL")
     DONATION_LINK = os.environ.get("DONATION_LINK")
     LOAD = os.environ.get("LOAD", "").split()
     NO_LOAD = os.environ.get("NO_LOAD", "translation").split()
-    DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))
-    STRICT_GBAN = bool(os.environ.get("STRICT_GBAN", False))
+    DEL_CMDS = env_bool("DEL_CMDS")
+    STRICT_GBAN = env_bool("STRICT_GBAN")
     WORKERS = int(os.environ.get("WORKERS", 8))
     BAN_STICKER = os.environ.get("BAN_STICKER", "CAADAgADOwADPPEcAXkko5EB3YGYAg")
-    ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
+    ALLOW_EXCL = env_bool("ALLOW_EXCL")
     CASH_API_KEY = os.environ.get("CASH_API_KEY", None)
     TIME_API_KEY = os.environ.get("TIME_API_KEY", None)
     AI_API_KEY = os.environ.get("AI_API_KEY", None)
@@ -84,7 +95,7 @@ if ENV:
     SPAMWATCH_SUPPORT_CHAT = os.environ.get("SPAMWATCH_SUPPORT_CHAT", None)
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
 
-    ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
+    ALLOW_CHATS = env_bool("ALLOW_CHATS", True)
 
     try:
         BL_CHATS = set(int(x) for x in os.environ.get("BL_CHATS", "").split())
